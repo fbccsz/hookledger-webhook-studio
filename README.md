@@ -8,7 +8,7 @@
 
 **A local-first webhook operations console with a real Python API, rule-based routing, HMAC verification, idempotent ingestion, execution traces, and replayable failures.**
 
-[Live interactive sandbox](https://hookledger-webhook-studio.vercel.app) · [Architecture](docs/ARCHITECTURE.md) · [API reference](docs/API.md) · [Security model](docs/SECURITY.md)
+[Live interactive sandbox](https://hookledger-webhook-studio.vercel.app) · [Interface screenshots](#interface-screenshots) · [Architecture](docs/ARCHITECTURE.md) · [API reference](docs/API.md) · [Security model](docs/SECURITY.md)
 
 [![CI](https://github.com/fbccsz/hookledger-webhook-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/fbccsz/hookledger-webhook-studio/actions/workflows/ci.yml)
 ![React](https://img.shields.io/badge/React-18-10161b?logo=react&logoColor=91e8ff)
@@ -36,7 +36,42 @@ It is intentionally different from a generic SaaS dashboard: **the domain logic 
 >
 > The demo is deployed from the GitHub repository using Vercel Git integration. Changes to `main` can trigger a fresh build; only the frontend is hosted.
 
+### Interface screenshots
 
+Real captures of the [live sandbox](https://hookledger-webhook-studio.vercel.app/) on **November 11, 2026**, using only the project's built-in fictional events and routes.
+
+**Operations overview** — event metrics, throughput and outcome breakdown.
+
+![HookLedger overview with event metrics, throughput chart and delivery outcome breakdown](docs/screenshots/01-overview.jpg)
+
+<details>
+<summary><strong>Event inspection and execution trace</strong></summary>
+
+The Event explorer is filtered to failed sandbox events. The inspector shows payload validation, condition matching, route selection and the intentional failure in the demo delivery mode.
+
+![HookLedger event inspector with the four-step trace of a fictional failed support event](docs/screenshots/02-event-trace.jpg)
+
+</details>
+
+<details>
+<summary><strong>Conditional routing rules</strong></summary>
+
+Configured routes expose their endpoints, comparison conditions and event counters.
+
+![HookLedger routing rules showing lead qualification and simulated payment lifecycle conditions](docs/screenshots/03-routing-rules.jpg)
+
+</details>
+
+<details>
+<summary><strong>Playground and dry-run result</strong></summary>
+
+A sample lead payload is evaluated against the qualification rule. The dry run shows every evaluation step without storing an event or forwarding a request.
+
+![HookLedger Playground showing a sample JSON payload and a completed execution trace](docs/screenshots/04-playground.jpg)
+
+</details>
+
+[Capture details and reproduction steps](docs/screenshots/README.md).
 
 ### What you can do
 
