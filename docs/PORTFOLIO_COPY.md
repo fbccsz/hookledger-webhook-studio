@@ -17,7 +17,7 @@ Use the following concise copy when the new GitHub repository is published.
 
 A local-first integration debugging console with a signed webhook API, deduplication, configurable rules, execution traces and manual replay. Built as a functional portfolio project inspired by real API/automation freelance requirements.
 
-[Live sandbox](https://hookledger-studio.vercel.app) · [Source code](https://github.com/fbccsz/hookledger-webhook-studio)
+[Live sandbox](https://hookledger-webhook-studio.vercel.app) · [Source code](https://github.com/fbccsz/hookledger-webhook-studio)
 ```
 
 **Important:** the GitHub URL above is a publishing target only. It is not an existing repository until created and populated. Keep the live demo and source URLs separate until publication is verified.

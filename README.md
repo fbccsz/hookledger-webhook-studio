@@ -8,7 +8,7 @@
 
 **A local-first webhook operations console with a real Python API, rule-based routing, HMAC verification, idempotent ingestion, execution traces, and replayable failures.**
 
-[Live interactive sandbox](https://hookledger-studio.vercel.app) · [Architecture](docs/ARCHITECTURE.md) · [API reference](docs/API.md) · [Security model](docs/SECURITY.md)
+[Live interactive sandbox](https://hookledger-webhook-studio.vercel.app) · [Architecture](docs/ARCHITECTURE.md) · [API reference](docs/API.md) · [Security model](docs/SECURITY.md)
 
 [![CI](https://github.com/fbccsz/hookledger-webhook-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/fbccsz/hookledger-webhook-studio/actions/workflows/ci.yml)
 ![React](https://img.shields.io/badge/React-18-10161b?logo=react&logoColor=91e8ff)
@@ -33,6 +33,8 @@ It is intentionally different from a generic SaaS dashboard: **the domain logic 
 ## Interface
 
 > The hosted application is a fully interactive **sandbox with generated data**. It is *not* connected to real customer accounts or external payment processors. Changes persist in the visitor's browser.
+>
+> The demo is deployed from the GitHub repository using Vercel Git integration. Changes to `main` can trigger a fresh build; only the frontend is hosted.
 
 
 
