@@ -10,6 +10,18 @@ export function getPath(payload: Record<string, unknown>, path: string): [boolea
   return [true, current];
 }
 
+function parseFiniteDecimal(value: unknown): number | null {
+  if (typeof value === 'string') {
+    const text = value.trim();
+    if (!/^[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?$/.test(text)) return null;
+    value = text;
+  } else if (typeof value !== 'number' && typeof value !== 'boolean') {
+    return null;
+  }
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? numeric : null;
+}
+
 export function evaluate(route: LedgerRoute | RouteDraft, payload: Record<string, unknown>): Evaluation {
   const [found, actual] = getPath(payload, route.field);
   let matched = false;
@@ -17,7 +29,11 @@ export function evaluate(route: LedgerRoute | RouteDraft, payload: Record<string
   else if (found) {
     if (route.operator === 'equals') matched = String(actual).toLowerCase() === route.expected.toLowerCase();
     if (route.operator === 'contains') matched = String(actual).toLowerCase().includes(route.expected.toLowerCase());
-    if (route.operator === 'greater_than') matched = Number(actual) > Number(route.expected) && Number.isFinite(Number(actual));
+    if (route.operator === 'greater_than') {
+      const actualNumber = parseFiniteDecimal(actual);
+      const expectedNumber = parseFiniteDecimal(route.expected);
+      matched = actualNumber !== null && expectedNumber !== null && actualNumber > expectedNumber;
+    }
   }
   const status: EventStatus = !matched ? 'filtered' : route.delivery_mode === 'sandbox_failure' ? 'failed' : 'delivered';
   const trace: TraceStep[] = [
