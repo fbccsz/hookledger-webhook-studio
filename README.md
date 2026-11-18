@@ -16,6 +16,7 @@
 ![Python](https://img.shields.io/badge/Python-3.11%2B-10161b?logo=python&logoColor=ffe087)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-10161b?logo=fastapi&logoColor=88ddb9)
 ![SQLite](https://img.shields.io/badge/SQLite-persistence-10161b?logo=sqlite&logoColor=91b2ff)
+![Vercel](https://img.shields.io/badge/Vercel-deployed-10161b?logo=vercel&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-b7f477?labelColor=10161b&color=b7f477)
 
 </div>
@@ -239,6 +240,54 @@ hookledger/
 ├── .github/workflows/       # CI
 └── LICENSE
 ```
+
+---
+
+<details>
+<summary><strong>🇧🇷 Leia em Português</strong></summary>
+
+## Sobre o HookLedger
+
+O **HookLedger** é um studio completo para criação, teste e monitoramento de webhooks. Combina uma interface interativa em React/TypeScript com um backend robusto em FastAPI/Python, oferecendo um dashboard em tempo real para operações com webhooks.
+
+### Principais funcionalidades
+
+- **Painel de operações** — métricas de eventos, gráficos de throughput e detalhamento de resultados de entrega.
+- **Inspeção de eventos** — explorador de eventos com filtros, inspetor de payloads e rastreamento completo de execução em 4 etapas.
+- **Roteamento condicional** — regras configuráveis com condições de comparação e contadores de eventos por rota.
+- **Playground com dry-run** — teste payloads JSON contra suas regras sem persistir eventos ou disparar requisições reais.
+- **Verificação HMAC-SHA256** — validação de assinatura em tempo constante com modo fail-closed.
+- **Idempotência** — constraint única por rota no SQLite para prevenção de duplicatas.
+- **Replay de falhas** — reprocessamento de eventos com rastreamento detalhado de execução (até 10 tentativas).
+- **Injeção de falhas** — modo configurável para simulação de cenários de erro.
+
+### Início rápido
+
+```bash
+# Frontend (modo sandbox)
+cd frontend && npm install && npm run dev
+
+# Backend (API Python)
+cd backend && python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+export HOOKLEDGER_ADMIN_TOKEN="token-seguro-de-pelo-menos-20-caracteres"
+export HOOKLEDGER_WEBHOOK_SECRET="segredo-hmac-independente"
+uvicorn hookledger.main:app --reload
+```
+
+### Stack tecnológico
+
+| Camada | Tecnologias |
+| --- | --- |
+| **Frontend** | React 18, TypeScript 5, Vite, Lucide, gráficos SVG nativos, CSS responsivo escuro |
+| **Backend** | Python 3.11+, FastAPI, Pydantic v2, SQLite, HMAC (stdlib), pytest |
+| **Engenharia** | Motor de regras puro, rastreamento de execução, idempotência por rota, verificação HMAC, replay limitado, CI automático |
+
+### Relevância comercial
+
+Este projeto é uma resposta de portfólio a padrões recorrentes em demandas reais de freelance: validação de webhooks, integrações de API, logs, prevenção de duplicatas e dashboards operacionais. O produto é original e não copia listagens comerciais existentes.
+
+</details>
 
 ---
 
