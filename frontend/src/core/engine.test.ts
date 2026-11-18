@@ -53,4 +53,17 @@ describe('pure webhook rule engine', () => {
     expect(metrics.active_routes).toBe(1);
     expect(metrics.daily).toHaveLength(7);
   });
+  it('rejects non-finite, blank and non-decimal comparison operands', () => {
+    const numeric = { ...route, field: 'amount', operator: 'greater_than' as const, expected: '70' };
+    for (const actual of ['Infinity', '-Infinity', 'NaN', '', '  ', '0x10', null, { value: 80 }]) {
+      expect(evaluate(numeric, { amount: actual }).status).toBe('filtered');
+    }
+    for (const expected of ['', 'Infinity', '0x10']) {
+      expect(evaluate({ ...numeric, expected }, { amount: 80 }).status).toBe('filtered');
+    }
+    expect(evaluate(numeric, { amount: 80 }).status).toBe('delivered');
+    expect(evaluate(numeric, { amount: '1e2' }).status).toBe('delivered');
+    expect(evaluate(numeric, { amount: 70 }).status).toBe('filtered');
+  });
+
 });

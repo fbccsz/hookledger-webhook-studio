@@ -87,6 +87,13 @@ def test_routes_matching_and_filtered(client):
     assert events[0]['trace'][-1]['result'] == 'skipped'
 
 
+def test_non_finite_webhook_number_is_filtered(client):
+    create(client)
+    response = send(client, {'lead': {'score': 'Infinity'}}, key='non-finite-score')
+    assert response.status_code == 200
+    assert response.json()['status'] == 'filtered'
+
+
 def test_deduplicates_per_route_and_key(client):
     create(client)
     payload = {'lead': {'score': 91}}

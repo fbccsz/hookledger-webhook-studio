@@ -1,8 +1,26 @@
 """Pure, deterministic routing rules. No expression evaluation or arbitrary code."""
 from __future__ import annotations
+import math
+import re
 from typing import Any
 
 OPERATORS = frozenset({'equals', 'contains', 'greater_than', 'exists'})
+DECIMAL_PATTERN = re.compile(r'^[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?$')
+
+
+def parse_finite_decimal(value: Any) -> float | None:
+    """Convert finite JSON scalars using the same decimal syntax as the UI."""
+    if isinstance(value, str):
+        value = value.strip()
+        if not DECIMAL_PATTERN.fullmatch(value):
+            return None
+    elif not isinstance(value, (int, float, bool)):
+        return None
+    try:
+        number = float(value)
+    except (ValueError, TypeError, OverflowError):
+        return None
+    return number if math.isfinite(number) else None
 
 
 def get_path(payload: dict[str, Any], path: str) -> tuple[bool, Any]:
@@ -31,10 +49,12 @@ def evaluate_rule(payload: dict[str, Any], field: str, operator: str, expected: 
     elif operator == 'contains':
         matched = expected.casefold() in str(actual).casefold()
     else:
-        try:
-            matched = float(actual) > float(expected)
-        except (ValueError, TypeError, OverflowError):
-            matched = False
+        actual_number = parse_finite_decimal(actual)
+        expected_number = parse_finite_decimal(expected)
+        matched = (
+            actual_number is not None and expected_number is not None
+            and actual_number > expected_number
+        )
     trace = [
         {'step': 'payload', 'result': 'ok', 'detail': 'JSON object accepted'},
         {'step': 'condition', 'result': 'matched' if matched else 'skipped',
